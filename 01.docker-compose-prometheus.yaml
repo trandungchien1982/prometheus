@@ -1,0 +1,26 @@
+version: '3.6'
+
+# Server chính Prometheus
+# Sử dụng file config ./prometheus-configs/prometheus.yml
+#
+# Các dữ liệu của Prometheus sẽ được lưu trữ trong ./prometheus-data
+# Trong môi trường thử nghiệm, ta có thể setting full permission để tránh lỗi :
+#   chmod 777 ./prometheus-data
+
+services:
+  prometheus:
+    image: prom/prometheus:v2.12.0
+    command:
+      - --config.file=/prometheus-configs/prometheus.yml
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prometheus-data:/prometheus
+      - ./prometheus-configs:/prometheus-configs
+
+    networks:
+      - common-network
+
+networks:
+  common-network:
+    external: true

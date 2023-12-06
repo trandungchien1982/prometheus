@@ -1,0 +1,23 @@
+version: '3.6'
+
+# Grafana dùng để Visualize UI các metrics cần quan tâm một cách chi tiết hơn
+#   so với Dashboard có sẵn của Prometheus ...
+# Trong môi trường thử nghiệm, ta có thể setting full permission để tránh lỗi :
+#   chmod 777 ./grafana-data
+
+services:
+  grafana:
+    image: grafana/grafana:6.3.5
+    ports:
+      - 3000:3000
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: secret
+    volumes:
+      - ./grafana-data:/var/lib/grafana
+
+    networks:
+      - common-network
+
+networks:
+  common-network:
+    external: true

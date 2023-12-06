@@ -1,0 +1,19 @@
+version: '3.6'
+
+services:
+  cadvisor:
+    image: google/cadvisor:latest
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    ports:
+      - 8008:8080
+
+    networks:
+      - common-network
+
+networks:
+  common-network:
+    external: true
